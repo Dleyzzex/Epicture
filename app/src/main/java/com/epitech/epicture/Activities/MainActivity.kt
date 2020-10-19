@@ -1,4 +1,4 @@
-package com.example.epicture
+package com.epitech.epicture
 
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton

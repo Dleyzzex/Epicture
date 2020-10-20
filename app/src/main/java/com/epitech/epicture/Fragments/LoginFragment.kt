@@ -25,22 +25,10 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var identifiant_componant = view.findViewById<EditText>(R.id.identifiant);
-        var password_componant = view.findViewById<EditText>(R.id.password);
-        var id = "";
-        var pass = "";
 
         // change view if button clicked
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
-            id = identifiant_componant.toString();
-            pass = password_componant.toString();
-        }
-        identifiant_componant.setOnClickListener {
-            identifiant_componant.setText("");
-        }
-        password_componant.setOnClickListener {
-            password_componant.setText("");
         }
     }
 }

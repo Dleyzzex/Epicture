@@ -9,12 +9,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.TextView
+import com.epitech.epicture.HomeFragment
+import com.epitech.epicture.MainActivity
 import com.epitech.epicture.R
+import org.w3c.dom.Text
+import com.epitech.epicture.Activities.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
 
     private val clientId: String = "db884af3ed37495"
     private val clientSecret: String = "3a21260660d015e50b27eb46a37a4784d0139659"
+
     private val host = "api.imgur.com/3"
     val url = "https://api.imgur.com/oauth2/authorize?client_id=$clientId&response_type=token"
 
@@ -26,5 +32,15 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var url = intent.data
+        println(url)
+        if (url != null && url.toString().startsWith("epicture://callback"!!)) {
+            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

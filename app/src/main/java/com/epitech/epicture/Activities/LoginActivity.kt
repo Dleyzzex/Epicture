@@ -19,10 +19,7 @@ import com.epitech.epicture.Activities.HomeActivity
 class LoginActivity : AppCompatActivity() {
 
     private val clientId: String = "db884af3ed37495"
-    private val clientSecret: String = "3a21260660d015e50b27eb46a37a4784d0139659"
-
-    private val host = "api.imgur.com/3"
-    val url = "https://api.imgur.com/oauth2/authorize?client_id=$clientId&response_type=token"
+    private val url = "https://api.imgur.com/oauth2/authorize?client_id=$clientId&response_type=token"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

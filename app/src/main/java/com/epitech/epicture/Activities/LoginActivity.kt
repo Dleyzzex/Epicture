@@ -31,16 +31,25 @@ class LoginActivity : AppCompatActivity() {
         button.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
-       }
+        }
     }
 
     override fun onResume() {
         super.onResume()
+
         var url = intent.data
-        println(url)
         if (url != null && url.toString().startsWith("epicture://callback"!!)) {
-            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-            startActivity(intent)
+            if (url.getQueryParameter("error") == null) {
+                var _uri = Uri.parse(url.toString().replace('#', '?'))
+                val _accessToken = _uri.getQueryParameter("access_token")
+                val _refreshToken = _uri.getQueryParameter("refresh_token")
+                val _accountUsername = _uri.getQueryParameter("account_username")
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                intent.putExtra("access_token", _accessToken)
+                intent.putExtra("refresh_token", _refreshToken)
+                intent.putExtra("account_username", _accountUsername)
+                startActivity(intent)
+            }
         }
     }
 }

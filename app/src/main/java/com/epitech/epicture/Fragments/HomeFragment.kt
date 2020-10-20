@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import com.epitech.epicture.R.id.action_HomeFragment_to_LoginFragment
+import kotlinx.android.synthetic.main.fragment_login.*
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -28,5 +30,6 @@ class HomeFragment : Fragment() {
         view.findViewById<Button>(R.id.button_second).setOnClickListener {
             findNavController().navigate(action_HomeFragment_to_LoginFragment)
         }
+
     }
 }

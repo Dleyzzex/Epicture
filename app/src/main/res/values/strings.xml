@@ -1,16 +1,10 @@
 <resources>
     <string name="app_name">Epicture</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <!-- Strings Authentification -->
-    <string name="identifiant">Identifiant</string>
-    <string name="password">Mot de passe</string>
-
+    <!-- Search -->
+    <string name="search_fragment">Search</string>
+    <string name="search_image">Search images</string>
+    <!-- Account -->
+    <string name="account_fragment">Account</string>
+    <!-- Upload -->
+    <string name="upload_fragment">Upload</string>
 </resources>

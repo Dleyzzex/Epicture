@@ -1,25 +1,20 @@
 package com.epitech.epicture.Activities
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Button
 import android.widget.TextView
-import com.epitech.epicture.HomeFragment
+import androidx.fragment.app.Fragment
+import com.epitech.epicture.AccountFragment
 import com.epitech.epicture.R
-import org.w3c.dom.Text
+import com.epitech.epicture.SearchFragment
+import com.epitech.epicture.UploadFragment
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
     var _accessToken: String? = null
     var _refreshToken: String? = null
     var _accountUsername: String? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +23,29 @@ class HomeActivity : AppCompatActivity() {
         _accessToken = intent.getStringExtra("access_token")
         _refreshToken = intent.getStringExtra("refresh_token")
         _accountUsername = intent.getStringExtra("account_username")
-        println(_accessToken)
-        println(_refreshToken)
-        println(_accountUsername)
         var _message: String = "Hello " + _accountUsername + " !"
-        findViewById<TextView>(R.id.username).setText(_message)
+        //findViewById<TextView>(R.id.username).setText(_message)
+
+
+        var accountFragment = AccountFragment()
+        var searchFragment = SearchFragment()
+        var uploadFragment = UploadFragment()
+
+        makeCurrentFragment(accountFragment)
+
+        bottom_bar.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.ic_account -> makeCurrentFragment(accountFragment)
+                R.id.ic_search -> makeCurrentFragment(searchFragment)
+                R.id.ic_upload -> makeCurrentFragment(uploadFragment)
+            }
+            true
+        }
     }
+
+    private fun makeCurrentFragment(fragment: Fragment) =
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fl_wrapper, fragment)
+            commit()
+        }
 }

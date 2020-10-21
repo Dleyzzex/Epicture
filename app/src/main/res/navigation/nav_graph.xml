@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/LoginFragment">
+    app:startDestination="@id/AccountFragment">
 
     <fragment
-        android:id="@+id/LoginFragment"
-        android:name="com.epitech.epicture.LoginFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_login">
-
-        <action
-            android:id="@+id/action_LoginFragment_to_HomeFragment"
-            app:destination="@id/HomeFragment" />
+        android:id="@+id/SearchFragment"
+        android:name="com.epitech.epicture.SearchFragment"
+        android:label="@string/search_fragment"
+        tools:layout="@layout/fragment_search">
     </fragment>
-    <fragment
-        android:id="@+id/HomeFragment"
-        android:name="com.epitech.epicture.HomeFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_home">
 
-        <action
-            android:id="@+id/action_HomeFragment_to_LoginFragment"
-            app:destination="@id/LoginFragment" />
+    <fragment
+        android:id="@+id/AccountFragment"
+        android:name="com.epitech.epicture.AccountFragment"
+        android:label="@string/account_fragment"
+        tools:layout="@layout/fragment_account">
+    </fragment>
+
+    <fragment
+        android:id="@+id/UploadFragment"
+        android:name="com.epitech.epicture.UploadFragment"
+        android:label="Upload"
+        tools:layout="@layout/fragment_upload">
     </fragment>
 </navigation>

@@ -27,7 +27,7 @@ class HomeActivity : AppCompatActivity() {
         //findViewById<TextView>(R.id.username).setText(_message)
 
 
-        var accountFragment = AccountFragment()
+        var accountFragment = AccountFragment.newInstance(_accessToken!!, _refreshToken!!, _accountUsername!!)
         var searchFragment = SearchFragment()
         var uploadFragment = UploadFragment()
 

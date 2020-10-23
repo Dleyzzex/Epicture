@@ -30,5 +30,6 @@ class ImgurModels
         val link: String
     )
 
-    data class Result(val data: List<DataImage>, val success: Boolean, val status: String)
+    data class ResultImage(val data: List<DataImage>, val success: Boolean, val status: String)
+    data class ResultString(val data: String, val success: Boolean, val status: String)
 }

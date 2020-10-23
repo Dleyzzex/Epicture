@@ -1,5 +1,7 @@
 package com.epitech.epicture.Activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
@@ -27,9 +29,9 @@ class HomeActivity : AppCompatActivity() {
         //findViewById<TextView>(R.id.username).setText(_message)
 
 
-        var accountFragment = AccountFragment.newInstance(_accessToken!!, _refreshToken!!, _accountUsername!!)
+        var accountFragment = AccountFragment(_accessToken!!, _refreshToken!!, _accountUsername!!)
         var searchFragment = SearchFragment()
-        var uploadFragment = UploadFragment()
+        var uploadFragment = UploadFragment(_accessToken!!)
 
         makeCurrentFragment(accountFragment)
 
@@ -48,4 +50,8 @@ class HomeActivity : AppCompatActivity() {
             replace(R.id.fl_wrapper, fragment)
             commit()
         }
+
+    override fun onResume() {
+        super.onResume()
+    }
 }

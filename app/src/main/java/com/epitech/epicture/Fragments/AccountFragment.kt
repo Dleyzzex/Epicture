@@ -19,21 +19,12 @@ import java.util.*
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class AccountFragment : Fragment() {
+class AccountFragment(accessToken: String, refreshToken: String, accountUsername: String) : Fragment() {
 
     var _imageList: MutableList<ImgurModels.DataImage>? = null
-
-    companion object {
-        fun newInstance(_accessToken: String, _refreshToken: String, _accountUsername: String): AccountFragment {
-            val args = Bundle()
-            args.putString("_accessToken", _accessToken)
-            args.putString("_refreshToken", _refreshToken)
-            args.putString("_accountUsername", _accountUsername)
-            val fragment = AccountFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
+    val _accessToken = accessToken
+    val _refreshToken = refreshToken
+    val _accountUsername = accountUsername
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         updateImageList()
@@ -53,11 +44,11 @@ class AccountFragment : Fragment() {
         val imgurApi = RetrofitService().createImgurService()
         val _accessToken = arguments?.getString("_accessToken")
         val call = imgurApi.getImages("Bearer " + _accessToken)
-        call.enqueue(object: Callback<ImgurModels.Result> {
-            override fun onFailure(call: Call<ImgurModels.Result>, t: Throwable?) {
+        call.enqueue(object: Callback<ImgurModels.ResultImage> {
+            override fun onFailure(call: Call<ImgurModels.ResultImage>, t: Throwable?) {
                 error("KO")
             }
-            override fun onResponse(call: Call<ImgurModels.Result>, response: Response<ImgurModels.Result>) {
+            override fun onResponse(call: Call<ImgurModels.ResultImage>, response: Response<ImgurModels.ResultImage>) {
                     if (response.isSuccessful) {
                         _imageList = ArrayList()
                         val picList = response.body()
@@ -75,6 +66,35 @@ class AccountFragment : Fragment() {
                     else {
                         println(response.errorBody())
                     }
+            }
+        })
+    }
+
+    /**
+     * favorite and unfavorite an image
+     */
+    fun faveImage(idImage : String)
+    {
+        val imgurApi = RetrofitService().createImgurService()
+        val _accessToken = arguments?.getString("_accessToken")
+        val call = imgurApi.favoriteImage("Bearer " + _accessToken, idImage)
+        call.enqueue(object: Callback<ImgurModels.ResultString> {
+            override fun onFailure(call: Call<ImgurModels.ResultString>, t: Throwable?) {
+                error("KO")
+            }
+            override fun onResponse(call: Call<ImgurModels.ResultString>, response: Response<ImgurModels.ResultString>) {
+                if (response.isSuccessful) {
+                    val res = response.body()
+                    if (res != null) {
+                        if (res.data == "favorited")
+                            println("image $idImage favorited")
+                        else
+                            println("image $idImage defavorited")
+                    }
+                }
+                else {
+                    println(response.errorBody())
+                }
             }
         })
     }

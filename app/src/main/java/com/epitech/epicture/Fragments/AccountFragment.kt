@@ -1,12 +1,16 @@
 package com.epitech.epicture
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.epitech.epicture.Adapters.ImageGridKotlinAdapter
 import com.epitech.epicture.Model.ImgurModels
 import com.epitech.epicture.Services.Retrofit.RetrofitService
+import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +42,7 @@ class AccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
     }
 
     /**
@@ -56,10 +61,16 @@ class AccountFragment : Fragment() {
                     if (response.isSuccessful) {
                         _imageList = ArrayList()
                         val picList = response.body()
+                        val urlList = ArrayList<String>()
                         picList!!.data.forEach { pic ->
                             _imageList!!.add(pic)
+                            urlList.add(pic.link)
                         }
-                        //println(_pictureList)
+                        val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                        rv.layoutManager = sglm
+                        val context: Context? = getContext()
+                        val igka = ImageGridKotlinAdapter(context, urlList)
+                        rv.adapter = igka
                     }
                     else {
                         println(response.errorBody())

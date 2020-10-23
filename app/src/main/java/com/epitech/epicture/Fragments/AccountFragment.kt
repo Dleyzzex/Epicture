@@ -42,7 +42,6 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
     fun updateImageList()
     {
         val imgurApi = RetrofitService().createImgurService()
-        val _accessToken = arguments?.getString("_accessToken")
         val call = imgurApi.getImages("Bearer " + _accessToken)
         call.enqueue(object: Callback<ImgurModels.ResultImage> {
             override fun onFailure(call: Call<ImgurModels.ResultImage>, t: Throwable?) {
@@ -76,7 +75,6 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
     fun faveImage(idImage : String)
     {
         val imgurApi = RetrofitService().createImgurService()
-        val _accessToken = arguments?.getString("_accessToken")
         val call = imgurApi.favoriteImage("Bearer " + _accessToken, idImage)
         call.enqueue(object: Callback<ImgurModels.ResultString> {
             override fun onFailure(call: Call<ImgurModels.ResultString>, t: Throwable?) {

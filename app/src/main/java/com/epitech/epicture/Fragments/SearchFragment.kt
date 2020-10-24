@@ -21,31 +21,19 @@ import retrofit2.Response
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class SearchFragment : Fragment() {
+class SearchFragment(accessToken: String) : Fragment() {
+
+    val _accessToken = accessToken
+    var _imageList: MutableList<ImgurModels.DataImage>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        updateSearchListRandom()
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        rv.layoutManager = sglm
-
-        val context: Context? = getContext()
-
-        val imageList = ArrayList<String>()
-        imageList.add("https://i.imgur.com/v8hn4T0.jpg")
-        imageList.add("https://i.imgur.com/v8hn4T0.jpg")
-        imageList.add("https://i.imgur.com/v8hn4T0.jpg")
-        imageList.add("https://i.imgur.com/v8hn4T0.jpg")
-        imageList.add("https://i.imgur.com/v8hn4T0.jpg")
-        imageList.add("https://i.imgur.com/v8hn4T0.jpg")
-        imageList.add("https://i.imgur.com/v8hn4T0.jpg")
-
-        val igka = ImageGridKotlinAdapter(context, imageList)
-        rv.adapter = igka
 
         val SearchButton: SearchView = view.findViewById(R.id.searchView)
         var searchString: String? = null
@@ -53,11 +41,86 @@ class SearchFragment : Fragment() {
         SearchButton.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 searchString = p0
-                println(searchString)
+                searchString?.let { updateSearchList(it) }
+
                 return false
             }
             override fun onQueryTextChange(p0: String?): Boolean {
                 return false
+            }
+        })
+    }
+
+    /**
+     * Update the search fragment's imageList with random method
+     */
+    fun updateSearchListRandom()
+    {
+        val imgurApi = RetrofitService().createImgurService()
+        val call = imgurApi.getSearchRandom("Bearer " + _accessToken)
+        call.enqueue(object: Callback<ImgurModels.ResultSearch> {
+            override fun onFailure(call: Call<ImgurModels.ResultSearch>, t: Throwable?) {
+                error("KO")
+            }
+            override fun onResponse(call: Call<ImgurModels.ResultSearch>, response: Response<ImgurModels.ResultSearch>) {
+                if (response.isSuccessful) {
+                    _imageList = java.util.ArrayList()
+                    val picList = response.body()?.data
+                    val urlList = java.util.ArrayList<String>()
+                    picList!!.forEach { pic ->
+                        if (pic.is_album) {
+                            if (pic.images[0].link.endsWith(".jpg") || pic.images[0].link.endsWith(".png")) {
+                                urlList.add(pic.images[0].link)
+                                _imageList!!.add(pic.images[0])
+                            }
+                        }
+                    }
+                    val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    rv.layoutManager = sglm
+                    val context: Context? = getContext()
+                    val igka = ImageGridKotlinAdapter(context, urlList)
+                    rv.adapter = igka
+                }
+                else {
+                    println(response.errorBody())
+                }
+            }
+        })
+    }
+
+    /**
+     * Update the search fragment's imageList with the string query string
+     */
+    fun updateSearchList(query : String)
+    {
+        val imgurApi = RetrofitService().createImgurService()
+        val call = imgurApi.getSearch("Bearer " + _accessToken, "0", query)
+        call.enqueue(object: Callback<ImgurModels.ResultSearch> {
+            override fun onFailure(call: Call<ImgurModels.ResultSearch>, t: Throwable?) {
+                error("KO")
+            }
+            override fun onResponse(call: Call<ImgurModels.ResultSearch>, response: Response<ImgurModels.ResultSearch>) {
+                if (response.isSuccessful) {
+                    _imageList = java.util.ArrayList()
+                    val picList = response.body()?.data
+                    val urlList = java.util.ArrayList<String>()
+                    picList!!.forEach { pic ->
+                        if (pic.is_album) {
+                            if (pic.images[0].link.endsWith(".jpg") || pic.images[0].link.endsWith(".png")) {
+                                urlList.add(pic.images[0].link)
+                                _imageList!!.add(pic.images[0])
+                            }
+                        }
+                    }
+                    val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    rv.layoutManager = sglm
+                    val context: Context? = getContext()
+                    val igka = ImageGridKotlinAdapter(context, urlList)
+                    rv.adapter = igka
+                }
+                else {
+                    println(response.errorBody())
+                }
             }
         })
     }

@@ -58,8 +58,6 @@ class UploadFragment(accessToken: String) : Fragment() {
         return root
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
@@ -84,7 +82,7 @@ class UploadFragment(accessToken: String) : Fragment() {
 
     private fun checkPermission()
     {
-        if (this.context?.checkPermission("WRITE_EXTERNAL_STORAGE", 1, 1) != PERMISSION_GRANTED){
+        if (this.context?.checkPermission("WRITE_EXTERNAL_STORAGE", 1, 1) != PERMISSION_GRANTED) {
             requestPermissions(arrayOf(WRITE_EXTERNAL_STORAGE), REQUEST_CODE)
         }
     }

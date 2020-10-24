@@ -28,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
 
         var accountFragment = AccountFragment(_accessToken!!, _refreshToken!!, _accountUsername!!)
         var favFragment = FavFragment(_accessToken!!, _refreshToken!!, _accountUsername!!)
-        var searchFragment = SearchFragment()
+        var searchFragment = SearchFragment(_accessToken!!)
         var uploadFragment = UploadFragment(_accessToken!!)
 
         makeCurrentFragment(accountFragment)

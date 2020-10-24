@@ -71,4 +71,26 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
             }
         })
     }
+
+    /**
+     * Delete an image
+     */
+    fun deleteImage(deletehash : String)
+    {
+        val imgurApi = RetrofitService().createImgurService()
+        val call = imgurApi.deleteImage("Bearer " + _accessToken, deletehash)
+        call.enqueue(object: Callback<ImgurModels.ResultBool> {
+            override fun onFailure(call: Call<ImgurModels.ResultBool>, t: Throwable?) {
+                error("KO")
+            }
+            override fun onResponse(call: Call<ImgurModels.ResultBool>, response: Response<ImgurModels.ResultBool>) {
+                if (response.isSuccessful) {
+                    println("image delete")
+                }
+                else {
+                    println(response.errorBody())
+                }
+            }
+        })
+    }
 }

@@ -54,15 +54,15 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
                     if (response.isSuccessful) {
                         _imageList = ArrayList()
                         val picList = response.body()
-                        val urlList = ArrayList<String>()
+                        var urlList: MutableList<ImgurModels.DataImage>? = ArrayList()
                         picList!!.data.forEach { pic ->
                             _imageList!!.add(pic)
-                            urlList.add(pic.link)
+                            urlList!!.add(pic)
                         }
                         val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                         rv.layoutManager = sglm
                         val context: Context? = getContext()
-                        val igka = ImageGridKotlinAdapter(context, urlList)
+                        val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken)
                         rv.adapter = igka
                     }
                     else {

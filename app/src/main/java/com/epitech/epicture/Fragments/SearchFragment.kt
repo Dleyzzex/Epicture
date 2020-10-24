@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.ArrayList
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -66,11 +67,11 @@ class SearchFragment(accessToken: String) : Fragment() {
                 if (response.isSuccessful) {
                     _imageList = java.util.ArrayList()
                     val picList = response.body()?.data
-                    val urlList = java.util.ArrayList<String>()
+                    var urlList: MutableList<ImgurModels.DataImage>? = ArrayList()
                     picList!!.forEach { pic ->
                         if (pic.is_album) {
                             if (pic.images[0].link.endsWith(".jpg") || pic.images[0].link.endsWith(".png")) {
-                                urlList.add(pic.images[0].link)
+                                urlList!!.add(pic.images[0])
                                 _imageList!!.add(pic.images[0])
                             }
                         }
@@ -78,7 +79,7 @@ class SearchFragment(accessToken: String) : Fragment() {
                     val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                     rv.layoutManager = sglm
                     val context: Context? = getContext()
-                    val igka = ImageGridKotlinAdapter(context, urlList)
+                    val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken)
                     rv.adapter = igka
                 }
                 else {
@@ -103,11 +104,11 @@ class SearchFragment(accessToken: String) : Fragment() {
                 if (response.isSuccessful) {
                     _imageList = java.util.ArrayList()
                     val picList = response.body()?.data
-                    val urlList = java.util.ArrayList<String>()
+                    var urlList: MutableList<ImgurModels.DataImage>? = ArrayList()
                     picList!!.forEach { pic ->
                         if (pic.is_album) {
                             if (pic.images[0].link.endsWith(".jpg") || pic.images[0].link.endsWith(".png")) {
-                                urlList.add(pic.images[0].link)
+                                urlList!!.add(pic.images[0])
                                 _imageList!!.add(pic.images[0])
                             }
                         }
@@ -115,7 +116,7 @@ class SearchFragment(accessToken: String) : Fragment() {
                     val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                     rv.layoutManager = sglm
                     val context: Context? = getContext()
-                    val igka = ImageGridKotlinAdapter(context, urlList)
+                    val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken)
                     rv.adapter = igka
                 }
                 else {

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ImageActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".ImageActivity">
 
         <TextView
             android:id="@+id/image_name"
@@ -13,15 +17,16 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
-            android:text="IMAGE NAME"/>
+            android:text=""/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/image_name">
+            android:layout_below="@id/image_name"
+            tools:context=".ImageActivity">
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/image_mod"
                 android:layout_width="500dp"
                 android:layout_centerVertical="true"
                 android:layout_height="500dp"
@@ -29,12 +34,15 @@
 
             <Button
                 android:id="@+id/like"
+                android:background="@color/colorPrimaryDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/image"
+                android:layout_below="@id/image_mod"
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
-                android:icon="@drawable/ic_fav"
+                android:drawableStart="@drawable/ic_fav"
+                android:text="Like"
+                android:textColor="#fff"
                 android:layout_margin="10dp"/>
 
         </RelativeLayout>

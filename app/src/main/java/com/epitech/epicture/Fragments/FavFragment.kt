@@ -54,44 +54,16 @@ class FavFragment(accessToken: String, refreshToken: String, accountUsername: St
                 if (response.isSuccessful) {
                     _favoriteList = ArrayList()
                     val picList = response.body()
-                    val urlList = ArrayList<String>()
+                    var urlList: MutableList<ImgurModels.DataImage>? = ArrayList()
                     picList!!.data.forEach { pic ->
                         _favoriteList!!.add(pic)
-                        urlList.add(pic.link)
+                        urlList!!.add(pic)
                     }
                     //val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                     //rv.layoutManager = sglm
                     val context: Context? = getContext()
-                    val igka = ImageGridKotlinAdapter(context, urlList)
+                    val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken)
                     rv.adapter = igka
-                }
-                else {
-                    println(response.errorBody())
-                }
-            }
-        })
-    }
-
-    /**
-     * favorite and unfavorite an image
-     */
-    fun faveImage(idImage : String)
-    {
-        val imgurApi = RetrofitService().createImgurService()
-        val call = imgurApi.favoriteImage("Bearer " + _accessToken, idImage)
-        call.enqueue(object: Callback<ImgurModels.ResultString> {
-            override fun onFailure(call: Call<ImgurModels.ResultString>, t: Throwable?) {
-                error("KO")
-            }
-            override fun onResponse(call: Call<ImgurModels.ResultString>, response: Response<ImgurModels.ResultString>) {
-                if (response.isSuccessful) {
-                    val res = response.body()
-                    if (res != null) {
-                        if (res.data == "favorited")
-                            println("image $idImage favorited")
-                        else
-                            println("image $idImage defavorited")
-                    }
                 }
                 else {
                     println(response.errorBody())

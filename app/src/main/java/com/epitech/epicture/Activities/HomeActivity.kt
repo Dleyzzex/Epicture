@@ -25,7 +25,6 @@ class HomeActivity : AppCompatActivity() {
         var _message: String = "Hello " + _accountUsername + " !"
         //findViewById<TextView>(R.id.username).setText(_message)
 
-
         var accountFragment = AccountFragment(_accessToken!!, _refreshToken!!, _accountUsername!!)
         var favFragment = FavFragment(_accessToken!!, _refreshToken!!, _accountUsername!!)
         var searchFragment = SearchFragment(_accessToken!!)

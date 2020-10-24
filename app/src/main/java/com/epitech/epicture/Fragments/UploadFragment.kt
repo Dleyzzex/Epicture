@@ -1,6 +1,5 @@
 package com.epitech.epicture
 
-import android.Manifest
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity
 import android.app.AlertDialog
@@ -8,6 +7,7 @@ import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -44,10 +44,11 @@ class UploadFragment(accessToken: String) : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        checkPermission()
+
         val root = inflater.inflate(R.layout.fragment_upload, container, false)
         val buttonCamera: Button = root.findViewById(R.id.btnCamera)
         val buttonPick: Button = root.findViewById(R.id.btnPick)
+        checkPermission()
         buttonCamera.setOnClickListener {
             openCamera()
         }
@@ -83,10 +84,8 @@ class UploadFragment(accessToken: String) : Fragment() {
 
     private fun checkPermission()
     {
-        if (this.context?.let { ContextCompat.checkSelfPermission(it,Manifest.permission.WRITE_EXTERNAL_STORAGE) } != PackageManager.PERMISSION_GRANTED){
-            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA,
-                Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE)
+        if (this.context?.checkPermission("WRITE_EXTERNAL_STORAGE", 1, 1) != PERMISSION_GRANTED){
+            requestPermissions(arrayOf(WRITE_EXTERNAL_STORAGE), REQUEST_CODE)
         }
     }
 

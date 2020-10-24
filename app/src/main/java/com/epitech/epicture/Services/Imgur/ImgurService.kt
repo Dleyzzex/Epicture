@@ -16,7 +16,15 @@ interface ImgurService
      * Get the user's image list
      */
     @GET("/3/account/me/images")
-    fun getImages(@Header("Authorization") authHeader: String): Call<ImgurModels.ResultImage>
+    fun getImages(
+        @Header("Authorization") authHeader: String
+    ): Call<ImgurModels.ResultImage>
+
+    @GET("/3/account/{username}/favorites")
+    fun getFavorites(
+        @Header("Authorization") authHeader: String,
+        @Path("username") imageId: String
+    ): Call<ImgurModels.ResultImage>
 
     @POST("/3/image/{imageHash}/favorite")
     fun favoriteImage(

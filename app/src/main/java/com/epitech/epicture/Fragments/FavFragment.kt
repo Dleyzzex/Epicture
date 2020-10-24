@@ -22,13 +22,13 @@ import java.util.*
  */
 class FavFragment(accessToken: String, refreshToken: String, accountUsername: String) : Fragment() {
 
-    var _imageList: MutableList<ImgurModels.DataImage>? = null
+    var _favoriteList: MutableList<ImgurModels.DataImage>? = null
     val _accessToken = accessToken
     val _refreshToken = refreshToken
     val _accountUsername = accountUsername
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        updateImageList()
+        updateFavoriteList()
         return inflater.inflate(R.layout.fragment_fav, container, false)
     }
 
@@ -42,23 +42,22 @@ class FavFragment(accessToken: String, refreshToken: String, accountUsername: St
     /**
      * Update the account fragment's imageList
      */
-    fun updateImageList()
+    fun updateFavoriteList()
     {
         val imgurApi = RetrofitService().createImgurService()
-        val call = imgurApi.getImages("Bearer " + _accessToken)
+        val call = imgurApi.getFavorites("Bearer " + _accessToken, _accountUsername)
         call.enqueue(object: Callback<ImgurModels.ResultImage> {
             override fun onFailure(call: Call<ImgurModels.ResultImage>, t: Throwable?) {
                 error("KO")
             }
             override fun onResponse(call: Call<ImgurModels.ResultImage>, response: Response<ImgurModels.ResultImage>) {
                 if (response.isSuccessful) {
-                    _imageList = ArrayList()
+                    _favoriteList = ArrayList()
                     val picList = response.body()
                     val urlList = ArrayList<String>()
                     picList!!.data.forEach { pic ->
-                        _imageList!!.add(pic)
-                        if (pic.favorite)
-                            urlList.add(pic.link)
+                        _favoriteList!!.add(pic)
+                        urlList.add(pic.link)
                     }
                     //val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                     //rv.layoutManager = sglm

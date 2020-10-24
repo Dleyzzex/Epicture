@@ -71,32 +71,4 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
             }
         })
     }
-
-    /**
-     * favorite and unfavorite an image
-     */
-    fun faveImage(idImage : String)
-    {
-        val imgurApi = RetrofitService().createImgurService()
-        val call = imgurApi.favoriteImage("Bearer " + _accessToken, idImage)
-        call.enqueue(object: Callback<ImgurModels.ResultString> {
-            override fun onFailure(call: Call<ImgurModels.ResultString>, t: Throwable?) {
-                error("KO")
-            }
-            override fun onResponse(call: Call<ImgurModels.ResultString>, response: Response<ImgurModels.ResultString>) {
-                if (response.isSuccessful) {
-                    val res = response.body()
-                    if (res != null) {
-                        if (res.data == "favorited")
-                            println("image $idImage favorited")
-                        else
-                            println("image $idImage defavorited")
-                    }
-                }
-                else {
-                    println(response.errorBody())
-                }
-            }
-        })
-    }
 }

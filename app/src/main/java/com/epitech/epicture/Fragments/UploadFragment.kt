@@ -19,20 +19,12 @@ import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.loader.content.CursorLoader
-import com.epitech.epicture.Model.ImgurModels
-import com.epitech.epicture.Services.Retrofit.RetrofitService
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import okhttp3.MediaType;
-import java.io.File
+
 
 import java.io.ByteArrayOutputStream
 import androidx.appcompat.app.AppCompatActivity
 import com.epitech.epicture.Activities.HomeActivity
+import com.epitech.epicture.Activities.UploadActivity
 import com.epitech.epicture.R
 
 
@@ -71,40 +63,6 @@ class UploadFragment(accessToken: String) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    /*private fun getRealPathFromURI(contentUri: Uri): String? {
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        val loader = CursorLoader(requireContext(), contentUri, proj, null, null, null)
-        val cursor = loader.loadInBackground()
-        val column_index = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor?.moveToFirst()
-        val result = cursor?.getString(column_index!!)
-        cursor?.close()
-        return result
-    }
-
-    fun uploadImage(MyPicBinary: Uri)
-    {
-        val imgurApi = RetrofitService().createImgurService()
-        val _accessToken = arguments?.getString("_accessToken")
-        val file = File(getRealPathFromURI(MyPicBinary!!))
-        val requestFile = RequestBody.create(MediaType.parse(requireActivity().contentResolver.getType(MyPicBinary)), file)
-        val imageBody = MultipartBody.Part.createFormData("image", file.name, requestFile)
-        val call = imgurApi.uploadImage("Bearer " + _accessToken, imageBody)
-        call.enqueue(object : Callback<ImgurModels.ResultImage> {
-            override fun onFailure(call: Call<ImgurModels.ResultImage>, t: Throwable?) {
-                error("KO")
-            }
-            override fun onResponse(call: Call<ImgurModels.ResultImage>, response: Response<ImgurModels.ResultImage>) {
-                if (response.isSuccessful) {
-                    val res = response.body()
-
-                } else {
-                    println(response.errorBody())
-                }
-            }
-        })
-    }*/
-
     private fun openCamera()
     {
         val values = ContentValues();
@@ -135,15 +93,16 @@ class UploadFragment(accessToken: String) : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
-            //val intent = Intent(this.requireContext(), HomeActivity::class.java)
+            val intent = Intent(this.requireContext(), UploadActivity::class.java)
+            intent.putExtra("access_token", _accessToken)
             if (requestCode == CAMERA_CODE) {
-                //intent.apply { putExtra("Image", _image.toString()) }
+                intent.apply { putExtra("image", _image.toString()) }
             }
             if (requestCode == SELECTED_CODE){
                 //imageView.setImageURI(data?.data) // handle chosen image
-                //intent.apply { putExtra("image", data?.data.toString()) }
+                intent.apply { putExtra("image", data?.data.toString()) }
             }
-            //startActivity(intent)
+            startActivity(intent)
         }
     }
 }

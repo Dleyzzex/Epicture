@@ -6,10 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.epitech.epicture.AccountFragment
-import com.epitech.epicture.R
-import com.epitech.epicture.SearchFragment
-import com.epitech.epicture.UploadFragment
+import com.epitech.epicture.*
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -30,6 +27,7 @@ class HomeActivity : AppCompatActivity() {
 
 
         var accountFragment = AccountFragment(_accessToken!!, _refreshToken!!, _accountUsername!!)
+        var favFragment = FavFragment(_accessToken!!, _refreshToken!!, _accountUsername!!)
         var searchFragment = SearchFragment()
         var uploadFragment = UploadFragment(_accessToken!!)
 
@@ -38,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
         bottom_bar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.ic_account -> makeCurrentFragment(accountFragment)
+                R.id.ic_fav -> makeCurrentFragment(favFragment)
                 R.id.ic_search -> makeCurrentFragment(searchFragment)
                 R.id.ic_upload -> makeCurrentFragment(uploadFragment)
             }
@@ -45,7 +44,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeCurrentFragment(fragment: Fragment) =
+    fun makeCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fl_wrapper, fragment)
             commit()

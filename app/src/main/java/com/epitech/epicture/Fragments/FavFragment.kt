@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.epitech.epicture.Adapters.ImageGridKotlinAdapter
 import com.epitech.epicture.Model.ImgurModels
@@ -20,7 +20,7 @@ import java.util.*
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class AccountFragment(accessToken: String, refreshToken: String, accountUsername: String) : Fragment() {
+class FavFragment(accessToken: String, refreshToken: String, accountUsername: String) : Fragment() {
 
     var _imageList: MutableList<ImgurModels.DataImage>? = null
     val _accessToken = accessToken
@@ -28,15 +28,15 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
     val _accountUsername = accountUsername
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         updateImageList()
-        return inflater.inflate(R.layout.fragment_account, container, false)
+        return inflater.inflate(R.layout.fragment_fav, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.username).setText("Hello " + _accountUsername + " !")
+        val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        rv.layoutManager = sglm
     }
 
     /**
@@ -51,23 +51,24 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
                 error("KO")
             }
             override fun onResponse(call: Call<ImgurModels.ResultImage>, response: Response<ImgurModels.ResultImage>) {
-                    if (response.isSuccessful) {
-                        _imageList = ArrayList()
-                        val picList = response.body()
-                        val urlList = ArrayList<String>()
-                        picList!!.data.forEach { pic ->
-                            _imageList!!.add(pic)
+                if (response.isSuccessful) {
+                    _imageList = ArrayList()
+                    val picList = response.body()
+                    val urlList = ArrayList<String>()
+                    picList!!.data.forEach { pic ->
+                        _imageList!!.add(pic)
+                        if (pic.favorite)
                             urlList.add(pic.link)
-                        }
-                        val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                        rv.layoutManager = sglm
-                        val context: Context? = getContext()
-                        val igka = ImageGridKotlinAdapter(context, urlList)
-                        rv.adapter = igka
                     }
-                    else {
-                        println(response.errorBody())
-                    }
+                    //val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    //rv.layoutManager = sglm
+                    val context: Context? = getContext()
+                    val igka = ImageGridKotlinAdapter(context, urlList)
+                    rv.adapter = igka
+                }
+                else {
+                    println(response.errorBody())
+                }
             }
         })
     }

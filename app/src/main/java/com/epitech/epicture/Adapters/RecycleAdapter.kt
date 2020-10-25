@@ -16,11 +16,13 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_recycle.view.*
 
 
-class ImageGridKotlinAdapter(private val c: Context, private val images:  MutableList<ImgurModels.DataImage>?, private val token: String, private val delete:Boolean) :
+class ImageGridKotlinAdapter(private val c: Context, private val images:  MutableList<ImgurModels.DataImage>, private val token: String, private val delete:Boolean) :
     RecyclerView.Adapter<ImageGridKotlinAdapter.ColorViewHolder>() {
 
+    var image_list: MutableList<ImgurModels.DataImage> = images
+
     override fun getItemCount(): Int {
-        return images!!.size
+        return image_list!!.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder {
@@ -28,7 +30,7 @@ class ImageGridKotlinAdapter(private val c: Context, private val images:  Mutabl
     }
 
     override fun onBindViewHolder(holder: ColorViewHolder, position: Int) {
-        val path = images?.get(position)?.link
+        val path = image_list?.get(position)?.link
 
         Picasso.get()
             .load(path)
@@ -38,13 +40,13 @@ class ImageGridKotlinAdapter(private val c: Context, private val images:  Mutabl
 
         holder.iv.setOnClickListener {
             val intent = Intent(c, ImageActivity::class.java).apply {
-                putExtra("image", images?.get(position)?.link)
-                putExtra("image_des", images?.get(position)?.description)
-                putExtra("image_title", images?.get(position)?.title)
-                putExtra("image_id", images?.get(position)?.id)
+                putExtra("image", image_list?.get(position)?.link)
+                putExtra("image_des", image_list?.get(position)?.description)
+                putExtra("image_title", image_list[position].title)
+                putExtra("image_id", image_list?.get(position)?.id)
                 putExtra("accessToken", token)
                 putExtra("delete_status", delete)
-                putExtra("delete_hash", images?.get(position)?.deletehash)
+                putExtra("delete_hash", image_list?.get(position)?.deletehash)
             }
             startActivity(c, intent, null)
         }

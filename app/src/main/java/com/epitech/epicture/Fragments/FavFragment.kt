@@ -34,9 +34,11 @@ class FavFragment(accessToken: String, refreshToken: String, accountUsername: St
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
-        val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        rv.layoutManager = sglm
+    override fun onResume() {
+        super.onResume()
+        updateFavoriteList()
     }
 
     /**
@@ -59,10 +61,10 @@ class FavFragment(accessToken: String, refreshToken: String, accountUsername: St
                         _favoriteList!!.add(pic)
                         urlList!!.add(pic)
                     }
-                    //val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                    //rv.layoutManager = sglm
+                    val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    rv.layoutManager = sglm
                     val context: Context? = getContext()
-                    val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken, false)
+                    val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, false)
                     rv.adapter = igka
                 }
                 else {

@@ -39,6 +39,11 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
         view.findViewById<TextView>(R.id.username).setText("Hello " + _accountUsername + " !")
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateImageList()
+    }
+
     /**
      * Update the account fragment's imageList
      */
@@ -53,16 +58,16 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
             override fun onResponse(call: Call<ImgurModels.ResultImage>, response: Response<ImgurModels.ResultImage>) {
                     if (response.isSuccessful) {
                         _imageList = ArrayList()
-                        val picList = response.body()
+                        val picList = response.body()?.data
                         var urlList: MutableList<ImgurModels.DataImage>? = ArrayList()
-                        picList!!.data.forEach { pic ->
+                        picList!!.forEach { pic ->
                             _imageList!!.add(pic)
                             urlList!!.add(pic)
                         }
                         val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                         rv.layoutManager = sglm
                         val context: Context? = getContext()
-                        val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken, true)
+                        val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, true)
                         rv.adapter = igka
                     }
                     else {

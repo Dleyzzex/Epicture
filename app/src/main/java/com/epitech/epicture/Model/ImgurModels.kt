@@ -4,7 +4,7 @@ class ImgurModels
 {
     data class DataImage(
         val id: String,
-        val title: String,
+        var title: String,
         val description: String,
         val link: String,
         val deletehash: String

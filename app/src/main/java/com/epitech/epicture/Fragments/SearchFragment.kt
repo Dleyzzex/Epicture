@@ -52,6 +52,11 @@ class SearchFragment(accessToken: String) : Fragment() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateSearchListRandom()
+    }
+
     /**
      * Update the search fragment's imageList with random method
      */
@@ -79,7 +84,7 @@ class SearchFragment(accessToken: String) : Fragment() {
                     val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                     rv.layoutManager = sglm
                     val context: Context? = getContext()
-                    val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken, false)
+                    val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, false)
                     rv.adapter = igka
                 }
                 else {
@@ -116,7 +121,7 @@ class SearchFragment(accessToken: String) : Fragment() {
                     val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                     rv.layoutManager = sglm
                     val context: Context? = getContext()
-                    val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken, false)
+                    val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, false)
                     rv.adapter = igka
                 }
                 else {

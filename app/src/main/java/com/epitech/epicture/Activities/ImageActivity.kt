@@ -36,7 +36,7 @@ class ImageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_image)
 
         var image_url = intent.getStringExtra("image")
-        var image_des: String = intent.getStringExtra("image_des").toString()
+        var image_des= intent.getStringExtra("image_des")
         var image_title = intent.getStringExtra("image_title")
         var image_id: String = intent.getStringExtra("image_id").toString()
         var delete_hash: String = intent.getStringExtra("delete_hash").toString()
@@ -47,9 +47,11 @@ class ImageActivity : AppCompatActivity() {
         Picasso.get().load(image_url).into(imageView)
         findViewById<Button>(R.id.like).setOnClickListener {
             faveImage(image_id)
+            finish()
         }
         findViewById<Button>(R.id.delete).setOnClickListener {
             deleteImage(delete_hash)
+            finish()
         }
         findViewById<TextView>(R.id.image_name).text = image_title.toString()
         if (delete_status == false)

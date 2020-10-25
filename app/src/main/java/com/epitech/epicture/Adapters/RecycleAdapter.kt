@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_recycle.view.*
 
 
-class ImageGridKotlinAdapter(private val c: Context, private val images:  MutableList<ImgurModels.DataImage>?, private val token: String) :
+class ImageGridKotlinAdapter(private val c: Context, private val images:  MutableList<ImgurModels.DataImage>?, private val token: String, private val delete:Boolean) :
     RecyclerView.Adapter<ImageGridKotlinAdapter.ColorViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -43,7 +43,8 @@ class ImageGridKotlinAdapter(private val c: Context, private val images:  Mutabl
                 putExtra("image_title", images?.get(position)?.title)
                 putExtra("image_id", images?.get(position)?.id)
                 putExtra("accessToken", token)
-
+                putExtra("delete_status", delete)
+                putExtra("delete_hash", images?.get(position)?.deletehash)
             }
             startActivity(c, intent, null)
         }

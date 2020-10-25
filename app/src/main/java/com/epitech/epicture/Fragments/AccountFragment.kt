@@ -62,34 +62,12 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
                         val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                         rv.layoutManager = sglm
                         val context: Context? = getContext()
-                        val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken)
+                        val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken, true)
                         rv.adapter = igka
                     }
                     else {
                         println(response.errorBody())
                     }
-            }
-        })
-    }
-
-    /**
-     * Delete an image
-     */
-    fun deleteImage(deletehash : String)
-    {
-        val imgurApi = RetrofitService().createImgurService()
-        val call = imgurApi.deleteImage("Bearer " + _accessToken, deletehash)
-        call.enqueue(object: Callback<ImgurModels.ResultBool> {
-            override fun onFailure(call: Call<ImgurModels.ResultBool>, t: Throwable?) {
-                error("KO")
-            }
-            override fun onResponse(call: Call<ImgurModels.ResultBool>, response: Response<ImgurModels.ResultBool>) {
-                if (response.isSuccessful) {
-                    println("image delete")
-                }
-                else {
-                    println(response.errorBody())
-                }
             }
         })
     }

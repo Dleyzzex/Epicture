@@ -69,7 +69,7 @@ interface ImgurService
     /**
      * Delete an image
      */
-    @POST("/3/image/{deletehash}")
+    @DELETE("/3/image/{deletehash}")
     fun deleteImage(
             @Header("Authorization") authHeader: String,
             @Path("deletehash") deletehash: String

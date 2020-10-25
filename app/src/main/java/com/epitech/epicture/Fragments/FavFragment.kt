@@ -62,7 +62,7 @@ class FavFragment(accessToken: String, refreshToken: String, accountUsername: St
                     //val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                     //rv.layoutManager = sglm
                     val context: Context? = getContext()
-                    val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken)
+                    val igka = ImageGridKotlinAdapter(context!!, urlList, _accessToken, false)
                     rv.adapter = igka
                 }
                 else {

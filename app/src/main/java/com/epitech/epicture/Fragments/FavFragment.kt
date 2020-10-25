@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.epitech.epicture.Adapters.ImageGridKotlinAdapter
 import com.epitech.epicture.Model.ImgurModels
@@ -55,9 +54,9 @@ class FavFragment(accessToken: String, refreshToken: String, accountUsername: St
             override fun onResponse(call: Call<ImgurModels.ResultImage>, response: Response<ImgurModels.ResultImage>) {
                 if (response.isSuccessful) {
                     _favoriteList = ArrayList()
-                    val picList = response.body()
+                    val picList = response.body()?.data
                     var urlList: MutableList<ImgurModels.DataImage>? = ArrayList()
-                    picList!!.data.forEach { pic ->
+                    picList!!.forEach { pic ->
                         _favoriteList!!.add(pic)
                         urlList!!.add(pic)
                     }

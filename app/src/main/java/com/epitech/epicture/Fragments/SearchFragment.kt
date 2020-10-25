@@ -54,7 +54,6 @@ class SearchFragment(accessToken: String) : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateSearchListRandom()
     }
 
     /**

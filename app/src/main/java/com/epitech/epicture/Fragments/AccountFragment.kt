@@ -28,14 +28,12 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
     val _accountUsername = accountUsername
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         updateImageList()
         return inflater.inflate(R.layout.fragment_account, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         view.findViewById<TextView>(R.id.username).setText("Hello " + _accountUsername + " !")
     }
 
@@ -56,23 +54,23 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
                 error("KO")
             }
             override fun onResponse(call: Call<ImgurModels.ResultImage>, response: Response<ImgurModels.ResultImage>) {
-                    if (response.isSuccessful) {
-                        _imageList = ArrayList()
-                        val picList = response.body()?.data
-                        var urlList: MutableList<ImgurModels.DataImage>? = ArrayList()
-                        picList!!.forEach { pic ->
-                            _imageList!!.add(pic)
-                            urlList!!.add(pic)
-                        }
-                        val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                        rv.layoutManager = sglm
-                        val context: Context? = getContext()
-                        val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, true)
-                        rv.adapter = igka
+                if (response.isSuccessful) {
+                    _imageList = ArrayList()
+                    val picList = response.body()?.data
+                    var urlList: MutableList<ImgurModels.DataImage>? = ArrayList()
+                    picList!!.forEach { pic ->
+                        _imageList!!.add(pic)
+                        urlList!!.add(pic)
                     }
-                    else {
-                        println(response.errorBody())
-                    }
+                    val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    rv.layoutManager = sglm
+                    val context: Context? = getContext()
+                    val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, true)
+                    rv.adapter = igka
+                }
+                else {
+                    println(response.errorBody())
+                }
             }
         })
     }

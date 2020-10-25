@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:queryBackground="@color/colorPrimaryDark"
+            android:queryBackground="@color/colorPrimary"
             android:queryHint="Search pictures"
             android:searchHintIcon="@drawable/ic_search_view"
             android:searchIcon="@drawable/ic_search_view" />

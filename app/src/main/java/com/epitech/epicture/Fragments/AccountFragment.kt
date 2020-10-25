@@ -34,7 +34,7 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<TextView>(R.id.username).setText("Hello " + _accountUsername + " !")
+        view.findViewById<TextView>(R.id.username).setText(_accountUsername)
     }
 
     override fun onResume() {

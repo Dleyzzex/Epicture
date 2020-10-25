@@ -38,8 +38,6 @@ class UploadFragment(accessToken: String) : Fragment() {
     val _accessToken = accessToken
     var _image : Uri? = null
     private val SELECTED_CODE = 1000
-    private val CAMERA_CODE = 1001
-    private val REQUEST_CODE = 1002
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,12 +46,8 @@ class UploadFragment(accessToken: String) : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_upload, container, false)
-        val buttonCamera: Button = root.findViewById(R.id.btnCamera)
         val buttonPick: Button = root.findViewById(R.id.btnPick)
         checkPermission()
-        buttonCamera.setOnClickListener {
-            openCamera()
-        }
         buttonPick.setOnClickListener {
             pickImage()
         }
@@ -62,17 +56,6 @@ class UploadFragment(accessToken: String) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    private fun openCamera()
-    {
-        val values = ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "new title")
-        values.put(MediaStore.Images.Media.DESCRIPTION, "new description")
-        _image = context?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, _image)
-        startActivityForResult(cameraIntent, CAMERA_CODE)
     }
 
     private fun pickImage()
@@ -94,10 +77,6 @@ class UploadFragment(accessToken: String) : Fragment() {
         if (resultCode == Activity.RESULT_OK && data != null) {
             val intent = Intent(this.requireContext(), UploadActivity::class.java)
             intent.putExtra("access_token", _accessToken)
-            if (requestCode == CAMERA_CODE) {
-                intent.apply { putExtra("image", _image.toString()) }
-                println("HELLO" + _image.toString())
-            }
             if (requestCode == SELECTED_CODE){
                 //imageView.setImageURI(data?.data) // handle chosen image
                 intent.apply { putExtra("image", data?.data.toString()) }

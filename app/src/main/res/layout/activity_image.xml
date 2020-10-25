@@ -16,7 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/dark">
 
         <ImageView
             android:id="@+id/image_mod"
@@ -33,7 +34,8 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/darkgrey">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,19 +49,19 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/image_mod"
                 android:layout_marginRight="60dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/darkgrey"
                 android:drawableStart="@drawable/ic_trash"
                 android:text="delete"
-                android:textColor="#fff" />
+                android:textColor="@color/colorPrimaryDark" />
 
             <Button
                 android:id="@+id/like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/darkgrey"
                 android:drawableStart="@drawable/ic_fav"
                 android:text="Like"
-                android:textColor="#fff" />
+                android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
 
     </LinearLayout>

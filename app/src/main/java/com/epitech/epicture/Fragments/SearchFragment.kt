@@ -56,9 +56,6 @@ class SearchFragment(accessToken: String) : Fragment() {
                 return false
             }
         })
-        view.findViewById<Button>(R.id.refresh).setOnClickListener {
-            updateSearchListRandom()
-        }
     }
 
     override fun onResume() {

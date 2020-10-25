@@ -1,6 +1,7 @@
 package com.epitech.epicture
 
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.Manifest
+import android.Manifest.permission.*
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
@@ -23,6 +24,7 @@ import androidx.fragment.app.Fragment
 
 import java.io.ByteArrayOutputStream
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.checkSelfPermission
 import com.epitech.epicture.Activities.HomeActivity
 import com.epitech.epicture.Activities.UploadActivity
 import com.epitech.epicture.R
@@ -82,9 +84,9 @@ class UploadFragment(accessToken: String) : Fragment() {
 
     private fun checkPermission()
     {
-        if (this.context?.checkPermission("WRITE_EXTERNAL_STORAGE", 1, 1) != PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(WRITE_EXTERNAL_STORAGE), REQUEST_CODE)
-        }
+        val permissions = arrayOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, CAMERA)
+        if (this.context?.checkSelfPermission(WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED || this.context?.checkSelfPermission(READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED ||  this.context?.checkSelfPermission(CAMERA) != PERMISSION_GRANTED)
+            requestPermissions(permissions, 666)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -94,6 +96,7 @@ class UploadFragment(accessToken: String) : Fragment() {
             intent.putExtra("access_token", _accessToken)
             if (requestCode == CAMERA_CODE) {
                 intent.apply { putExtra("image", _image.toString()) }
+                println("HELLO" + _image.toString())
             }
             if (requestCode == SELECTED_CODE){
                 //imageView.setImageURI(data?.data) // handle chosen image

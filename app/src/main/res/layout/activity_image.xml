@@ -1,67 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ImageActivity">
+    <ImageView
+        android:id="@+id/image_mod"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ImageActivity">
+    <Button
+        android:id="@+id/like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:drawableStart="@drawable/ic_fav"
+        android:text="Like"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_mod" />
 
-        <TextView
-            android:id="@+id/image_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:text=""/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/image_name"
-            tools:context=".ImageActivity">
-
-            <ImageView
-                android:id="@+id/image_mod"
-                android:layout_width="500dp"
-                android:layout_centerVertical="true"
-                android:layout_height="500dp"
-                android:layout_margin="10dp"/>
-
-            <Button
-                android:id="@+id/like"
-                android:background="@color/colorPrimaryDark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/image_mod"
-                android:drawableStart="@drawable/ic_fav"
-                android:text="Like"
-                android:textColor="#fff"
-                android:layout_margin="10dp"/>
-
-            <Button
-                android:id="@+id/delete"
-                android:background="@color/colorPrimaryDark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/image_mod"
-                android:layout_centerHorizontal="true"
-                android:drawableStart="@drawable/ic_trash"
-                android:text="delete"
-                android:textColor="#fff"
-                android:layout_margin="10dp"/>
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-</FrameLayout>
-    </ScrollView>
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_mod"
+        android:layout_marginHorizontal="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:drawableStart="@drawable/ic_trash"
+        android:text="delete"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_mod" />
+</androidx.constraintlayout.widget.ConstraintLayout>

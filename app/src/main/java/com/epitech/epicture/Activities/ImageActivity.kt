@@ -53,7 +53,6 @@ class ImageActivity : AppCompatActivity() {
             deleteImage(delete_hash)
             finish()
         }
-        findViewById<TextView>(R.id.image_name).text = image_title.toString()
         if (delete_status == false)
                 findViewById<Button>(R.id.delete).setVisibility(View.GONE);
 

@@ -63,10 +63,12 @@ class AccountFragment(accessToken: String, refreshToken: String, accountUsername
                         urlList!!.add(pic)
                     }
                     val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                    rv.layoutManager = sglm
-                    val context: Context? = getContext()
-                    val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, true)
-                    rv.adapter = igka
+                    if (rv != null) {
+                        rv.layoutManager = sglm
+                        val context: Context? = getContext()
+                        val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, true)
+                        rv.adapter = igka
+                    }
                 }
                 else {
                     println(response.errorBody())

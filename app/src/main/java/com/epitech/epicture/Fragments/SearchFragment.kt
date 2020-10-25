@@ -91,10 +91,12 @@ class SearchFragment(accessToken: String) : Fragment() {
                         }
                     }
                     val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                    rv.layoutManager = sglm
-                    val context: Context? = getContext()
-                    val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, false)
-                    rv.adapter = igka
+                    if (rv != null) {
+                        rv.layoutManager = sglm
+                        val context: Context? = getContext()
+                        val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, false)
+                        rv.adapter = igka
+                    }
                 } else {
                     println(response.errorBody())
                 }
@@ -131,10 +133,12 @@ class SearchFragment(accessToken: String) : Fragment() {
                         }
                     }
                     val sglm = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                    rv.layoutManager = sglm
-                    val context: Context? = getContext()
-                    val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, false)
-                    rv.adapter = igka
+                    if (rv != null) {
+                        rv.layoutManager = sglm
+                        val context: Context? = getContext()
+                        val igka = ImageGridKotlinAdapter(context!!, urlList!!, _accessToken, false)
+                        rv.adapter = igka
+                    }
                 } else {
                     println(response.errorBody())
                 }

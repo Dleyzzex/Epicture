@@ -30,13 +30,13 @@ class HomeActivity : AppCompatActivity() {
         var searchFragment = SearchFragment(_accessToken!!)
         var uploadFragment = UploadFragment(_accessToken!!)
 
-        makeCurrentFragment(accountFragment)
+        makeCurrentFragment(searchFragment)
 
         bottom_bar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.ic_account -> makeCurrentFragment(accountFragment)
                 R.id.ic_fav -> makeCurrentFragment(favFragment)
-                R.id.ic_search -> makeCurrentFragment(searchFragment)
+                R.id.ic_home -> makeCurrentFragment(searchFragment)
                 R.id.ic_upload -> makeCurrentFragment(uploadFragment)
             }
             true
